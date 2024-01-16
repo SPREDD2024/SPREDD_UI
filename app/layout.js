@@ -1,11 +1,15 @@
+import { UserProvider } from "@auth0/nextjs-auth0/client";
+
 export const metadata = {
-  title: 'SPREDD',
-}
+  title: "SPREDD",
+};
 
 export default function RootLayout({ children }) {
- return (
+  return (
     <html lang="en">
-      <body>{children}</body>
+      <UserProvider>
+        <body>{children}</body>
+      </UserProvider>
     </html>
-  )
+  );
 }
