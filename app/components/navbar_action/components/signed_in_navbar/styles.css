@@ -1,0 +1,12 @@
+.icon-group {
+  display: flex;
+  gap: 30px;
+}
+
+.menu {
+    padding: 0px !important;
+}
+
+.menu-item {
+    padding: 0px !important;
+}
