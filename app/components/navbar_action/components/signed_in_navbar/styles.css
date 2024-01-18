@@ -10,3 +10,7 @@
 .menu-item {
     padding: 0px !important;
 }
+
+.user-image {
+  height: 40px;
+}
