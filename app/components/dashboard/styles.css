@@ -1,223 +1,196 @@
 .flex {
   display: flex;
-  justify-content: space-between;
-  text-align: center;
 }
-.just-flex {
+
+.flex-row {
   display: flex;
+  flex-direction: row;
 }
-.sm-gap {
-  gap: 4px;
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
 }
-.relative {
-  position: relative;
+
+.center {
+  align-self: center;
 }
+
 .dashboard-container {
-  margin-top: 2rem;
-  margin-bottom: 4rem;
-  margin-inline: 2rem;
+  margin: 0.5rem;
 }
 
 .nba-banner {
   display: block;
+  height: 175px;
   width: 100%;
 }
-.dashboard-flex {
-  display: flex;
-  gap: 1rem;
-}
-.dashboard-card {
-  margin-top: 2rem;
-  background: linear-gradient(
-      114.25deg,
-      #242c3d 21.98%,
-      #2a3447 45.28%,
-      #242c3d 67.77%
-    ),
-    linear-gradient(
-      215.64deg,
-      rgba(255, 255, 255, 0.6) 3.94%,
-      rgba(255, 255, 255, 0) 63.74%
-    );
-  border-radius: 10px;
-  padding-bottom: 2.25rem;
-}
-.card-container {
-  padding-inline: 2rem;
-  padding-top: 1.5rem;
-}
-.card-heading {
-  margin-bottom: 0.75rem;
-  display: inline-block;
-  font-family: Inter;
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  padding-bottom: 3px;
-  border-bottom: #fe6800 solid 2px;
-}
-.info {
-  position: relative;
-  font-family: Inter;
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1rem;
-  letter-spacing: 0em;
-  display: inline-block;
-  background-color: #fe6800;
-  padding-inline: 0.375rem;
-  padding-block: 0.0625rem;
-  border-radius: 999px;
-  margin-left: 0.75rem;
-}
-.info-tip {
-  transform: translateX(1rem);
-  transition: all 0.5s;
-  opacity: 0;
-  pointer-events: none;
-  visibility: hidden;
-  position: absolute;
-  top: 0;
-  left: 20px;
-  min-width: 16rem;
-  background-color: #fe6800;
-  padding-inline: 0.4rem;
-  padding-block: 0.2rem;
-  border-radius: 5px;
-}
-.info:hover .info-tip {
-  opacity: 1;
-  pointer-events: auto;
-  visibility: visible;
-}
-.info-triangle {
-  top: 0.4rem;
-  right: 16.7rem;
-  position: absolute;
-}
-.game-card {
-  margin-top: 1rem;
 
+.prediction-card {
+  min-height: 50px;
+  background-color: #242c3d;
+  margin-top: 1rem;
   border-radius: 10px;
-  border: 2px;
-  height: 4.875rem;
-  background-color: #131927;
+  padding: 10px;
 }
-.game-flex {
-  height: 100%;
-  display: flex;
-  margin-inline: 3.75rem;
-  align-items: center;
-}
-.index {
-  font-family: Inter;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  color: #8f96a9;
-}
-.crown {
-  margin-right: 4px;
-  align-self: center;
-  width: 1.125rem;
-  height: 0.8125rem;
-}
-.teams-flex {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  margin-inline: auto;
-}
-.vs {
-  text-align: center;
-  font-family: Inter;
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: -0.025em;
-}
-.probability {
-  text-align: center;
-  font-family: Inter;
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  padding-inline: 0.3125rem;
-  padding-inline: 0.25rem;
-  background-color: #fe6800;
-  border-radius: 5px;
-}
-.triangle {
-  position: absolute;
-  top: 0.15rem;
-  right: 2.2rem;
-}
-.vertical-line {
-  content: " ";
-  width: 3px;
-  height: 58px;
-  border-radius: 99px;
-  background-color: #8f96a980;
-}
-.prediction-flex {
-  display: flex;
-  min-width: 30%;
+
+.card-header {
+  flex-direction: row;
   justify-content: space-between;
 }
-.prediction-text {
-  align-self: center;
-  margin-left: 1rem;
-  font-family: Inter;
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  color: #8f96a9;
+
+.header-text {
+  font-size: x-large;
+  font-weight: bold;
+  text-decoration: underline;
 }
-.prediction {
-  align-self: center;
-  margin-left: 0.375rem;
-  font-family: Inter;
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: -0.025em;
-}
-.bet-btn {
-  text-decoration: none;
-  background-color: #242c3d;
-  border: none;
-  padding-inline: 1rem;
-  padding-block: 0.375rem;
-  border-radius: 5px;
-}
-.bet-btn:hover {
-  cursor: pointer;
-}
-.bet {
-  font-family: Inter;
-  font-size: 0.875rem;
-  font-weight: 800;
-  letter-spacing: 0em;
-  color: #8f96a9;
-}
-.checkbox {
-  fill: #8f96a9;
-}
-.history-card {
-  min-width: 49%;
-}
-.highlight {
-  outline: #fe6800 solid 2px;
+
+.match-card {
+  flex-direction: row;
+  min-height: 90px;
+  background-color: rgb(var(--background-color));
   border-radius: 10px;
+  justify-content: space-between;
+  padding: 0px 20px;
 }
-.highlight .bet-btn {
-  background-color: #fe6800;
+
+.divider {
+  width: 4px;
+  background-color: #ff6700;
+  border-radius: 25px;
+  margin: 10px;
 }
-.highlight .bet {
-  color: #fff;
+
+.bet-button {
+  height: 40px;
+  width: 90px;
 }
-.highlight svg {
-  fill: #fff;
+
+.opponents {
+  flex-direction: row;
+  width: 60rem;
+  gap: 20px;
+  justify-content: center;
 }
-.preferred {
-  outline: #fe6800 solid 2px;
-  border-radius: 999px;
+
+.results {
+  flex-direction: row;
+  width: 25rem;
+  gap: 20px;
+}
+
+.home-team {
+  width: 30rem;
+  justify-content: right;
+  gap: 15px;
+}
+
+.away-team {
+  width: 30rem;
+  justify-content: left;
+  gap: 15px;
+}
+
+.vs {
+  width: 5rem;
+}
+
+.small {
+  font-size: small;
+}
+
+.medium {
+  font-size: medium;
+}
+
+.percentage {
+  position: relative;
+  background-color: #242c3d;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.prediction {
+  width: 15rem;
+}
+
+.mobile-percentage {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .card-header {
+    flex-direction: column;
+  }
+
+  .header-text {
+    font-size: medium;
+  }
+
+  .number {
+    display: none;
+  }
+
+  .match-card {
+    flex-direction: column;
+  }
+
+  .opponents {
+    margin-top: 5px;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+  }
+
+  .home-team,
+  .away-team {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .arrow {
+    display: none;
+  }
+
+  .vs {
+    width: 100%;
+  }
+
+  .divider {
+    width: 100%;
+    margin: 5px;
+    height: 3px;
+  }
+
+  .results {
+    width: 100%;
+    gap: 2px;
+    flex-direction: column;
+  }
+
+  .bet-button {
+    margin-bottom: 5px;
+  }
+
+  .prediction {
+    text-align: center;
+  }
+
+  .mobile-bet-button {
+    justify-content: space-evenly;
+  }
+
+  .percentage {
+    display: none;
+  }
+
+  .mobile-percentage {
+    display: block;
+    position: relative;
+    background-color: #242c3d;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
 }

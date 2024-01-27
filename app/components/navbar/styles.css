@@ -13,3 +13,9 @@
 .logo {
   height: 150px;
 }
+
+@media (max-width: 768px) {
+  .logo {
+    height: 110px;
+  }
+}
