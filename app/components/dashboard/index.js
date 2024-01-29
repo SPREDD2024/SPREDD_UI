@@ -1,43 +1,20 @@
 "use client";
 import React, { useState } from "react";
 import "./styles.css";
-import { Avatar, Button, Checkbox, IconButton, Pagination, Stack, ToggleButton, Tooltip, Typography } from "@mui/material";
+import { Button, Checkbox, IconButton, Pagination, Stack, Tooltip, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-import DashboardMatches from "../constants/dashboardMatches";
+import DashboardMatches from "../common/constants/dashboardMatches";
+import TeamColorCodes from "../common/constants/teamColorCodes";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
+import TeamColors from "../common/TeamColors";
 
 const Dashboard = () => {
   const itemsPerPage = 5;
 
   const [matches, setMatches] = useState(DashboardMatches);
-
-  // const getCircleStyle = (teamColors) => {
-  //   const gradient = `linear-gradient(to right, ${teamColors.join(", ")})`;
-
-  //   return {
-  //     background: gradient,
-  //     width: 50, // Adjust the width as needed
-  //     height: 50,
-  //     borderRadius: "50%",
-  //     display: "inline-block",
-  //     margin: "5px", // Adjust spacing as needed
-  //   };
-  // };
-
-  // const teams = [
-  //   {
-  //     name: "Atlanta Hawks",
-  //     colors: ["#E03A3E", "#C1D32F", "#26282A"],
-  //   },
-  //   {
-  //     name: "Boston Celtics",
-  //     colors: ["#007A33", "#BA9653"],
-  //   },
-  //   // Add more teams as needed
-  // ];
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -48,15 +25,18 @@ const Dashboard = () => {
   const handleBetClick = (id) => {
     setMatches((prevMatches) => prevMatches.map((match) => (match.id === id ? { ...match, checked: !match.checked } : match)));
   };
+  
+  const getTeamColors = (team) => {
+    const teamColors = TeamColorCodes.find((item) => item.name === team);
+    return teamColors ? teamColors.colors : [];
+  };
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentItems = matches.slice(startIndex, endIndex);
+
   return (
     <>
-      {/* {teams.map((team, index) => (
-        <div key={index} style={getCircleStyle(team.colors)}></div>
-      ))} */}
       <div className="dashboard-container flex-column">
         <img src="images/nba-banner.png" alt="nba banner" className="nba-banner" />
         <div className="prediction-card">
@@ -79,7 +59,7 @@ const Dashboard = () => {
                   <div className="home-team flex-row">
                     {item.homeTeam === item.prediction && <EmojiEventsIcon className="center" color="primary" />}
                     <Typography className="center medium">{item.homeTeam}</Typography>
-                    <Avatar alt={item.homeTeam} className="center" src={item.homeImageURL} sx={{ bgcolor: "#ff6700" }} />
+                    <TeamColors teamColors={getTeamColors(item.homeTeam)} />
                   </div>
                   <div className="vs flex-column">
                     <Typography className="center small">VS</Typography>
@@ -90,7 +70,7 @@ const Dashboard = () => {
                     </div>
                   </div>
                   <div className="away-team flex-row">
-                    <Avatar alt={item.awayTeam} className="center" src={item.awayImageURL} sx={{ bgcolor: "#ff6700" }} />
+                    <TeamColors teamColors={getTeamColors(item.awayTeam)} />
                     <Typography className="center">{item.awayTeam}</Typography>
                     {item.awayTeam === item.prediction && <EmojiEventsIcon className="center" color="primary" />}
                   </div>

@@ -7,7 +7,7 @@ import SignedInNavbar from "./components/signed_in_navbar";
 
 const Navbar_Action = () => {
   const pathName = usePathname();
-  return <div>{pathName === "/" ? <HomeNavbar /> : <SignedInNavbar />}</div>;
+  return <div>{pathName === "/" || pathName === "/signedOut" ? <HomeNavbar /> : <SignedInNavbar />}</div>;
 };
 
 export default Navbar_Action;
