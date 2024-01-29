@@ -13,7 +13,7 @@ import TeamColors from "../common/TeamColors";
 
 const Dashboard = () => {
   const gameItemsPerPage = 5;
-  const historyItemsPerPage = 10;
+  const historyItemsPerPage = window.innerWidth <= 768 ? 5 : 10;;
 
   const [matches, setMatches] = useState(DashboardMatches);
 

@@ -172,7 +172,9 @@
   }
 
   .home-team,
-  .away-team {
+  .home-team-history,
+  .away-team,
+  .away-team-history {
     justify-content: center;
     width: 100%;
   }
@@ -191,7 +193,8 @@
     height: 3px;
   }
 
-  .results {
+  .results,
+  .history-results {
     width: 100%;
     gap: 2px;
     flex-direction: column;
