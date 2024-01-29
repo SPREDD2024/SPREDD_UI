@@ -79,16 +79,36 @@
   gap: 20px;
 }
 
+.history-results {
+  flex-direction: row;
+  width: 12rem;
+  gap: 20px;
+}
+
 .home-team {
   width: 30rem;
   justify-content: right;
   gap: 15px;
 }
 
+.home-team-history {
+  width: 12rem;
+  justify-content: right;
+  text-align: right;
+  gap: 5px;
+}
+
 .away-team {
   width: 30rem;
   justify-content: left;
   gap: 15px;
+}
+
+.away-team-history {
+  width: 12rem;
+  justify-content: left;
+  text-align: left;
+  gap: 5px;
 }
 
 .vs {
@@ -117,6 +137,14 @@
 
 .mobile-percentage {
   display: none;
+}
+
+.history-div {
+  column-count: 2;
+}
+
+.mb-5 {
+  margin-bottom: 5px;
 }
 
 @media (max-width: 768px) {
@@ -192,5 +220,13 @@
     padding: 5px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .history-card {
+    width: calc(100% - 10px);
+  }
+
+  .history-div {
+    column-count: 1;
   }
 }

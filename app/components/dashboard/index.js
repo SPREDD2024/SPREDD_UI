@@ -12,28 +12,39 @@ import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import TeamColors from "../common/TeamColors";
 
 const Dashboard = () => {
-  const itemsPerPage = 5;
+  const gameItemsPerPage = 5;
+  const historyItemsPerPage = 10;
 
   const [matches, setMatches] = useState(DashboardMatches);
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentGamePage, setCurrentGamePage] = useState(1);
 
-  const handleChange = (event, value) => {
-    setCurrentPage(value);
+  const handleGamePageChange = (event, value) => {
+    setCurrentGamePage(value);
+  };
+
+  const [currentHistoryPage, setCurrentHistoryPage] = useState(1);
+
+  const handleHistoryPageChange = (event, value) => {
+    setCurrentHistoryPage(value);
   };
 
   const handleBetClick = (id) => {
     setMatches((prevMatches) => prevMatches.map((match) => (match.id === id ? { ...match, checked: !match.checked } : match)));
   };
-  
+
   const getTeamColors = (team) => {
     const teamColors = TeamColorCodes.find((item) => item.name === team);
     return teamColors ? teamColors.colors : [];
   };
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentItems = matches.slice(startIndex, endIndex);
+  const gameStartIndex = (currentGamePage - 1) * gameItemsPerPage;
+  const gameEndIndex = gameStartIndex + gameItemsPerPage;
+  const currentGameItems = matches.slice(gameStartIndex, gameEndIndex);
+
+  const historyStartIndex = (currentHistoryPage - 1) * historyItemsPerPage;
+  const historyEndIndex = historyStartIndex + historyItemsPerPage;
+  const currentHistoryItems = matches.slice(historyStartIndex, historyEndIndex);
 
   return (
     <>
@@ -50,11 +61,17 @@ const Dashboard = () => {
                   </IconButton>
                 </Tooltip>
               </Typography>
-              <Pagination count={Math.ceil(matches.length / itemsPerPage)} size="medium" page={currentPage} onChange={handleChange} color="primary" />
+              <Pagination
+                count={Math.ceil(matches.length / gameItemsPerPage)}
+                size="medium"
+                page={currentGamePage}
+                onChange={handleGamePageChange}
+                color="primary"
+              />
             </div>
-            {currentItems.map((item, index) => (
+            {currentGameItems.map((item, index) => (
               <div className="flex match-card" style={{ border: item.checked ? "1px solid #ff6700" : "0px" }}>
-                <Typography className="center number">{(currentPage - 1) * itemsPerPage + index + 1}</Typography>
+                <Typography className="center number">{(currentGamePage - 1) * gameItemsPerPage + index + 1}</Typography>
                 <div className="flex center opponents">
                   <div className="home-team flex-row">
                     {item.homeTeam === item.prediction && <EmojiEventsIcon className="center" color="primary" />}
@@ -94,7 +111,50 @@ const Dashboard = () => {
             ))}
           </Stack>
         </div>
-        <div className="prediction-card"></div>
+        <div className="prediction-card">
+          <Stack spacing={1}>
+            <div className="card-header flex">
+              <Typography className="header-text">History</Typography>
+              <Pagination
+                count={Math.ceil(matches.length / historyItemsPerPage)}
+                size="medium"
+                page={currentHistoryPage}
+                onChange={handleHistoryPageChange}
+                color="primary"
+              />
+            </div>
+            <div className="history-div">
+              {currentHistoryItems.map((item, index) => (
+                <div className="flex match-card mb-5" style={{ border: item.checked ? "1px solid #ff6700" : "0px" }}>
+                  <div className="flex center opponents">
+                    <div className="home-team-history flex-row">
+                      <Typography className="center medium">{item.homeTeam}</Typography>
+                      {item.homeTeam === item.prediction && <EmojiEventsIcon className="center" color="primary" />}
+                      <TeamColors teamColors={getTeamColors(item.homeTeam)} />
+                    </div>
+                    <div className="vs flex-column">
+                      <Typography className="center small">VS</Typography>
+                      <div className="center percentage flex-row">
+                        {item.homeTeam === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
+                        <Typography className="center">{item.winPercentage}%</Typography>
+                        {item.awayTeam === item.prediction && <DoubleArrowIcon />}
+                      </div>
+                    </div>
+                    <div className="away-team-history flex-row">
+                      <TeamColors teamColors={getTeamColors(item.awayTeam)} />
+                      {item.awayTeam === item.prediction && <EmojiEventsIcon className="center" color="primary" />}
+                      <Typography className="center">{item.awayTeam}</Typography>
+                    </div>
+                  </div>
+                  <div className="flex history-results">
+                    <div className="divider" />
+                    <Typography className="center prediction">Results: {item.prediction}</Typography>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Stack>
+        </div>
       </div>
     </>
   );
