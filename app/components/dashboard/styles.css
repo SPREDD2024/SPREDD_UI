@@ -42,7 +42,11 @@
 .header-text {
   font-size: x-large;
   font-weight: bold;
-  text-decoration: underline;
+}
+
+.header-title {
+  border-bottom: solid 2px #fe6800;
+  margin-bottom: 0.75rem;
 }
 
 .match-card {

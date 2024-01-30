@@ -54,7 +54,7 @@ const Dashboard = () => {
           <Stack spacing={1}>
             <div className="card-header flex">
               <Typography className="header-text">
-                All Matches
+                <span className="header-title">All Matches</span>
                 <Tooltip title="*Win Probability Percentages by Spredd's AI Prediction Engine" placement="right" arrow>
                   <IconButton>
                     <InfoIcon color="primary" />
@@ -65,6 +65,7 @@ const Dashboard = () => {
                 count={Math.ceil(matches.length / gameItemsPerPage)}
                 size="medium"
                 page={currentGamePage}
+                shape="rounded"
                 onChange={handleGamePageChange}
                 color="primary"
               />
@@ -118,7 +119,9 @@ const Dashboard = () => {
         <div className="prediction-card">
           <Stack spacing={1}>
             <div className="card-header flex">
-              <Typography className="header-text">History</Typography>
+              <Typography className="header-text">
+                <span className="header-title">History</span>
+              </Typography>
               <Pagination
                 count={Math.ceil(matches.length / historyItemsPerPage)}
                 size="medium"
