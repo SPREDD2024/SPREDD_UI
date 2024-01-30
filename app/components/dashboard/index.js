@@ -13,7 +13,7 @@ import TeamColors from "../common/TeamColors";
 
 const Dashboard = () => {
   const gameItemsPerPage = 5;
-  const historyItemsPerPage = (typeof window !== 'undefined' && window.innerWidth <= 768) ? 5 : 10;;
+  const historyItemsPerPage = typeof window !== "undefined" && window.innerWidth <= 768 ? 5 : 10;
 
   const [matches, setMatches] = useState(DashboardMatches);
 
@@ -70,8 +70,12 @@ const Dashboard = () => {
               />
             </div>
             {currentGameItems.map((item, index) => (
-              <div className="flex match-card" style={{ border: item.checked ? "1px solid #ff6700" : "0px" }}>
-                <Typography className="center number">{(currentGamePage - 1) * gameItemsPerPage + index + 1}</Typography>
+              <div className="flex match-card" style={{ outline: item.checked ? "1px solid #ff6700" : "0px" }}>
+                <Typography className="center number">
+                  {(currentGamePage - 1) * gameItemsPerPage + index + 1 < 10
+                    ? "0" + ((currentGamePage - 1) * gameItemsPerPage + index + 1)
+                    : (currentGamePage - 1) * gameItemsPerPage + index + 1}
+                </Typography>
                 <div className="flex center opponents">
                   <div className="home-team flex-row">
                     {item.homeTeam === item.prediction && <EmojiEventsIcon className="center" color="primary" />}
