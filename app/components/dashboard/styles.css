@@ -40,8 +40,8 @@
 }
 
 .header-text {
-  font-size: x-large;
-  font-weight: bold;
+  font-size: x-large !important;
+  font-weight: bold !important;
 }
 
 .header-title {

@@ -1,8 +1,10 @@
-'use client'
+"use client";
 import React from "react";
 import Navbar from "./components/navbar";
 import { ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
+import { Provider } from 'react-redux';
+import store from '../app/store';
 
 const theme = createTheme({
   palette: {
@@ -18,8 +20,10 @@ const theme = createTheme({
 const App = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
-      <Navbar />
-      {children}
+      <Provider store={store}>
+        <Navbar />
+        {children}
+      </Provider>
     </ThemeProvider>
   );
 };
