@@ -22,7 +22,7 @@
 
 .nba-banner {
   display: block;
-  height: 175px;
+  height: 225px;
   width: 100%;
 }
 
@@ -170,7 +170,6 @@
 
   .opponents {
     margin-top: 5px;
-    flex-direction: column;
     gap: 2px;
     width: 100%;
   }
@@ -235,5 +234,9 @@
 
   .history-div {
     column-count: 1;
+  }
+
+  .team-colors {
+    display: none;
   }
 }

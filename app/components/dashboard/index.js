@@ -6,7 +6,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-import { HISTORY_API_URL, PREDICTION_API_URL } from "../common/constants/apiURLs";
+import { PREDICTION_API_URL, HISTORY_API_URL } from "../common/constants/apiURLs";
 import TeamColorCodes from "../common/constants/teamColorCodes";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import TeamColors from "../common/TeamColors";
@@ -22,11 +22,13 @@ import axios from "axios";
 const Dashboard = () => {
   const dispatch = useDispatch();
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+
   const predictions = useSelector((state) => state.predictions);
   const history = useSelector((state) => state.history);
 
   const gameItemsPerPage = 5;
-  const historyItemsPerPage = typeof window !== "undefined" && window.innerWidth <= 768 ? 5 : 10;
+  const historyItemsPerPage = isMobile ? 5 : 10;
 
   const [loading, setLoading] = useState(true);
 
@@ -45,15 +47,15 @@ const Dashboard = () => {
     const dummyData = { id: -1, dummy: true };
     currentHistoryItems = [...currentHistoryItems, dummyData];
   }
-  useEffect(() => {
-    const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split("T")[0];
 
+  useEffect(() => {
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 5);
     const formattedStartDate = startDate.toISOString().split("T")[0];
 
     axios
-      .get(PREDICTION_API_URL + today)
+      .get(PREDICTION_API_URL + today, { headers: { "Content-Security-Policy": "upgrade-insecure-requests" } })
       .then((response) => {
         const dataWithChecked = response.data.map((item) => ({ ...item, checked: false }));
         dispatch(fetchPredictionsDataSuccess(dataWithChecked));
@@ -62,7 +64,9 @@ const Dashboard = () => {
       .finally(() => setLoading(false));
 
     axios
-      .get(`${HISTORY_API_URL}?start_date=${formattedStartDate}&end_date=${today}`)
+      .get(`${HISTORY_API_URL}?start_date=${formattedStartDate}&end_date=${today}`, {
+        headers: { "Content-Security-Policy": "upgrade-insecure-requests" },
+      })
       .then((response) => {
         dispatch(fetchHistoryDataSuccess(response.data.data));
       })
@@ -100,7 +104,7 @@ const Dashboard = () => {
         <Stack spacing={1}>
           <div className="card-header flex">
             <Typography className="header-text">
-              <span className="header-title">All Matches</span>
+              <span className="header-title">Today's Matches {today}</span>
               <Tooltip title="*Win Probability Percentages by Spredd's AI Prediction Engine" placement="right" arrow>
                 <IconButton>
                   <InfoIcon color="primary" />
@@ -121,7 +125,7 @@ const Dashboard = () => {
                   <div className="home-team flex-row">
                     {item.home_team === item.prediction && <EmojiEventsIcon className="center" color="primary" />}
                     <Typography className="center medium">{item.home_team}</Typography>
-                    <TeamColors teamColors={getTeamColors(item.home_team)} />
+                    {!isMobile && <TeamColors teamColors={getTeamColors(item.home_team)} />}
                   </div>
                   <div className="vs flex-column">
                     <Typography className="center small">VS</Typography>
@@ -132,14 +136,14 @@ const Dashboard = () => {
                     </div>
                   </div>
                   <div className="away-team flex-row">
-                    <TeamColors teamColors={getTeamColors(item.away_team)} />
+                    {!isMobile && <TeamColors teamColors={getTeamColors(item.away_team)} />}
                     <Typography className="center">{item.away_team}</Typography>
                     {item.away_team === item.prediction && <EmojiEventsIcon className="center" color="primary" />}
                   </div>
                 </div>
                 <div className="flex results">
                   <div className="divider" />
-                  <Typography className="center prediction">Prediction: {item.prediction}</Typography>
+                  {!isMobile && <Typography className="center prediction">Prediction: {item.prediction}</Typography>}
                   <div className="flex-row mobile-bet-button">
                     <Typography className="center mobile-percentage">{item.win_percentage}%</Typography>
                     <Button variant={item.checked ? "contained" : "outlined"} className="bet-button center" onClick={() => handleBetClick(item.id)}>
@@ -172,9 +176,9 @@ const Dashboard = () => {
                     <>
                       <div className="flex center opponents">
                         <div className="home-team-history flex-row">
-                          <Typography className="center medium">{item.home_team}</Typography>
                           {item.home_team === item.prediction && <EmojiEventsIcon className="center" color="primary" />}
-                          <TeamColors teamColors={getTeamColors(item.home_team)} />
+                          <Typography className="center medium">{item.home_team}</Typography>
+                          {!isMobile && <TeamColors teamColors={getTeamColors(item.home_team)} />}
                         </div>
                         <div className="vs flex-column">
                           <Typography className="center small">VS</Typography>
@@ -185,9 +189,9 @@ const Dashboard = () => {
                           </div>
                         </div>
                         <div className="away-team-history flex-row">
-                          <TeamColors teamColors={getTeamColors(item.away_team)} />
-                          {item.away_team === item.prediction && <EmojiEventsIcon className="center" color="primary" />}
+                          {!isMobile && <TeamColors teamColors={getTeamColors(item.away_team)} />}
                           <Typography className="center">{item.away_team}</Typography>
+                          {item.away_team === item.prediction && <EmojiEventsIcon className="center" color="primary" />}
                         </div>
                       </div>
                       <div className="flex history-results">
