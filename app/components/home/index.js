@@ -32,7 +32,7 @@ const Home = () => {
 
   return (
     <div className="dashboard-container flex-column">
-      <img src="images/nba-banner.png" alt="nba banner" className="nba-banner" />
+      <img src="images/nba-banner.png" alt="nba banner" className="nba-banner-landing-page" />
       <div className="prediction-card">
         <Stack spacing={1}>
           <div className="card-header flex">
