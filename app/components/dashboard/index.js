@@ -64,7 +64,17 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get(PREDICTION_API_URL + formattedToday, { headers: { "Content-Security-Policy": "upgrade-insecure-requests" } })
+      .get(PREDICTION_API_URL + formattedToday, {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Security-Policy": "upgrade-insecure-requests",
+        },
+        referrer: "",
+        referrerPolicy: "strict-origin-when-cross-origin",
+      })
       .then((response) => {
         const dataWithChecked = response.data.map((item) => ({ ...item, checked: false }));
         dispatch(fetchPredictionsDataSuccess(dataWithChecked));
