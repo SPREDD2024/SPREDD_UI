@@ -1,4 +1,9 @@
+import Home from './components/home'
 
-export default function Home() {
-  return <main >Landing Page</main>;
+export default function Index() {
+  return (
+    <main>
+      <Home />
+    </main>
+  );
 }

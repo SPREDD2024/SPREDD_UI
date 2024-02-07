@@ -47,15 +47,24 @@ const Dashboard = () => {
     const dummyData = { id: -1, dummy: true };
     currentHistoryItems = [...currentHistoryItems, dummyData];
   }
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date();
+  const formattedToday = [today.getFullYear(), String(today.getMonth() + 1).padStart(2, "0"), String(today.getDate()).padStart(2, "0")].join("-");
+
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const formattedYesterday = [
+    yesterday.getFullYear(),
+    String(yesterday.getMonth() + 1).padStart(2, "0"),
+    String(yesterday.getDate()).padStart(2, "0"),
+  ].join("-");
+
+  const oldDate = new Date();
+  oldDate.setDate(oldDate.getDate() - 5);
+  const startDate = [oldDate.getFullYear(), String(oldDate.getMonth() + 1).padStart(2, "0"), String(oldDate.getDate()).padStart(2, "0")].join("-");
 
   useEffect(() => {
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 5);
-    const formattedStartDate = startDate.toISOString().split("T")[0];
-
     axios
-      .get(PREDICTION_API_URL + today, { headers: { "Content-Security-Policy": "upgrade-insecure-requests" } })
+      .get(PREDICTION_API_URL + formattedToday, { headers: { "Content-Security-Policy": "upgrade-insecure-requests" } })
       .then((response) => {
         const dataWithChecked = response.data.map((item) => ({ ...item, checked: false }));
         dispatch(fetchPredictionsDataSuccess(dataWithChecked));
@@ -64,7 +73,7 @@ const Dashboard = () => {
       .finally(() => setLoading(false));
 
     axios
-      .get(`${HISTORY_API_URL}?start_date=${formattedStartDate}&end_date=${today}`, {
+      .get(`${HISTORY_API_URL}?start_date=${startDate}&end_date=${formattedYesterday}`, {
         headers: { "Content-Security-Policy": "upgrade-insecure-requests" },
       })
       .then((response) => {
@@ -104,7 +113,7 @@ const Dashboard = () => {
         <Stack spacing={1}>
           <div className="card-header flex">
             <Typography className="header-text">
-              <span className="header-title">Today's Matches {today}</span>
+              <span className="header-title">Today's Matches {formattedToday}</span>
               <Tooltip title="*Win Probability Percentages by Spredd's AI Prediction Engine" placement="right" arrow>
                 <IconButton>
                   <InfoIcon color="primary" />
@@ -123,12 +132,26 @@ const Dashboard = () => {
                 </Typography>
                 <div className="flex center opponents">
                   <div className="home-team flex-row">
-                    {item.home_team === item.prediction && <EmojiEventsIcon className="center" color="primary" />}
+                    {item.home_team === item.prediction && (
+                      <Tooltip
+                        title={
+                          <Typography className="medium">
+                            Chances of {item.home_team} winning are {item.win_percentage}%
+                          </Typography>
+                        }
+                        placement="left"
+                        arrow
+                      >
+                        <IconButton>
+                          <EmojiEventsIcon className="center" color="primary" />
+                        </IconButton>
+                      </Tooltip>
+                    )}
                     <Typography className="center medium">{item.home_team}</Typography>
                     {!isMobile && <TeamColors teamColors={getTeamColors(item.home_team)} />}
                   </div>
                   <div className="vs flex-column">
-                    <Typography className="center small">VS</Typography>
+                    <Typography className="center medium">VS</Typography>
                     <div className="center percentage flex-row">
                       {item.home_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
                       <Typography className="center">{item.win_percentage}%</Typography>
@@ -138,7 +161,21 @@ const Dashboard = () => {
                   <div className="away-team flex-row">
                     {!isMobile && <TeamColors teamColors={getTeamColors(item.away_team)} />}
                     <Typography className="center">{item.away_team}</Typography>
-                    {item.away_team === item.prediction && <EmojiEventsIcon className="center" color="primary" />}
+                    {item.away_team === item.prediction && (
+                      <Tooltip
+                        title={
+                          <Typography>
+                            Chances of {item.away_team} winning are {item.win_percentage}%
+                          </Typography>
+                        }
+                        placement="right"
+                        arrow
+                      >
+                        <IconButton>
+                          <EmojiEventsIcon className="center" color="primary" />
+                        </IconButton>
+                      </Tooltip>
+                    )}
                   </div>
                 </div>
                 <div className="flex results">
@@ -176,12 +213,29 @@ const Dashboard = () => {
                     <>
                       <div className="flex center opponents">
                         <div className="home-team-history flex-row">
-                          {item.home_team === item.prediction && <EmojiEventsIcon className="center" color="primary" />}
+                          {item.home_team === item.prediction && (
+                            <Tooltip
+                              title={
+                                <Typography>
+                                  Our Prediction: {item.prediction}
+                                  <br />
+                                  Actual Result: {item.win}
+                                </Typography>
+                              }
+                              placement="bottom"
+                              arrow
+                            >
+                              <IconButton>
+                                <EmojiEventsIcon className="center" color="primary" />
+                              </IconButton>
+                            </Tooltip>
+                          )}
                           <Typography className="center medium">{item.home_team}</Typography>
                           {!isMobile && <TeamColors teamColors={getTeamColors(item.home_team)} />}
                         </div>
                         <div className="vs flex-column">
-                          <Typography className="center small">VS</Typography>
+                          <Typography className="center small">{item.date}</Typography>
+                          <Typography className="center medium">VS</Typography>
                           <div className="center percentage flex-row">
                             {item.home_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
                             <Typography className="center">{item.win_percentage}%</Typography>
@@ -191,12 +245,28 @@ const Dashboard = () => {
                         <div className="away-team-history flex-row">
                           {!isMobile && <TeamColors teamColors={getTeamColors(item.away_team)} />}
                           <Typography className="center">{item.away_team}</Typography>
-                          {item.away_team === item.prediction && <EmojiEventsIcon className="center" color="primary" />}
+                          {item.away_team === item.prediction && (
+                            <Tooltip
+                              title={
+                                <Typography>
+                                  Our Prediction: {item.prediction}
+                                  <br />
+                                  Actual Result: {item.win}
+                                </Typography>
+                              }
+                              placement="bottom"
+                              arrow
+                            >
+                              <IconButton>
+                                <EmojiEventsIcon className="center" color="primary" />
+                              </IconButton>
+                            </Tooltip>
+                          )}
                         </div>
                       </div>
                       <div className="flex history-results">
                         <div className="divider" />
-                        <Typography className="center prediction">Results: {item.prediction}</Typography>
+                        <Typography className="center prediction medium">Results: {item.win}</Typography>
                       </div>
                     </>
                   )}
