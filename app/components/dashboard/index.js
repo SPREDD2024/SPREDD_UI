@@ -64,17 +64,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get(PREDICTION_API_URL + formattedToday, {
-        method: "GET",
-        mode: "cors",
-        credentials: "include",
-        headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Security-Policy": "upgrade-insecure-requests",
-        },
-        referrer: "",
-        referrerPolicy: "strict-origin-when-cross-origin",
-      })
+      .get(PREDICTION_API_URL + formattedToday)
       .then((response) => {
         const dataWithChecked = response.data.map((item) => ({ ...item, checked: false }));
         dispatch(fetchPredictionsDataSuccess(dataWithChecked));
@@ -83,9 +73,7 @@ const Dashboard = () => {
       .finally(() => setLoading(false));
 
     axios
-      .get(`${HISTORY_API_URL}?start_date=${startDate}&end_date=${formattedYesterday}`, {
-        headers: { "Content-Security-Policy": "upgrade-insecure-requests" },
-      })
+      .get(`${HISTORY_API_URL}?start_date=${startDate}&end_date=${formattedYesterday}`)
       .then((response) => {
         dispatch(fetchHistoryDataSuccess(response.data.data));
       })
