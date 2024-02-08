@@ -6,7 +6,9 @@ const backendURL = 'http://44.221.163.198'; // Replace with your actual backend 
 export default createProxyMiddleware({
   target: backendURL,
   changeOrigin: true,
-  protocol: 'http:', // Explicitly specify the protocol
+  onProxyReq: (proxyReq) => {
+    proxyReq.setHeader('X-Forwarded-Proto', 'http');
+  },
   pathRewrite: (path, req) => {
     if (path.startsWith('/api/predict')) {
       const dynamicPart = path.replace('/api/predict/', '');
