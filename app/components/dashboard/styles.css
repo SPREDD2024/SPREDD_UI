@@ -1,3 +1,6 @@
+*{
+  font-family: Inter;
+}
 .flex {
   display: flex;
 }
@@ -22,7 +25,7 @@
 
 .nba-banner {
   display: block;
-  height: 275px;
+  height: 375px;
   width: 100%;
 }
 
@@ -31,7 +34,8 @@
   background-color: #242c3d;
   margin-top: 1rem;
   border-radius: 10px;
-  padding: 10px;
+  padding-inline: 30px;
+  padding-block: 22px;
 }
 
 .card-header {
@@ -45,14 +49,14 @@
 }
 
 .header-title {
-  border-bottom: solid 2px #fe6800;
+  border-bottom: solid 3px #fe6800;
   margin-bottom: 0.75rem;
 }
 
 .match-card {
   flex-direction: row;
   min-height: 90px;
-  background-color: rgb(var(--background-color));
+  background-color: #131927;
   border-radius: 10px;
   justify-content: space-between;
   padding: 0px 20px;
@@ -60,16 +64,28 @@
 
 .divider {
   width: 4px;
-  background-color: #ff6700;
+  background-color: #8f96a980;
   border-radius: 25px;
   margin: 10px;
 }
 
 .bet-button {
+  font-weight: 800;
+  background-color: #242c3d;
+  color: #8f96a9;
+  border: none;
   height: 40px;
   width: 90px;
 }
-
+.bet-button:hover {
+  border: none;
+  height: 40px;
+  width: 90px;
+}
+.checked {
+  background-color: #fe6800;
+  color: #ffffff;
+}
 .opponents {
   flex-direction: row;
   width: 60rem;
@@ -138,7 +154,9 @@
 .prediction {
   width: 15rem;
 }
-
+.prediction-text {
+  color: #8f96a9;
+}
 .mobile-percentage {
   display: none;
 }
@@ -159,7 +177,7 @@
   .header-text {
     font-size: large !important;
   }
-
+  
   .number {
     display: none;
   }

@@ -31,7 +31,8 @@
   background-color: #242c3d;
   margin-top: 1rem;
   border-radius: 10px;
-  padding: 10px;
+  padding: 30px 22px;
+  
 }
 
 .card-header {
@@ -52,10 +53,11 @@
 .match-card {
   flex-direction: row;
   min-height: 90px;
-  background-color: rgb(var(--background-color));
+  background-color: #131927;
   border-radius: 10px;
   justify-content: space-between;
   padding: 0px 20px;
+  
 }
 
 .w100 {
@@ -78,12 +80,21 @@
 
 .divider {
   width: 4px;
-  background-color: #ff6700;
+  background-color: #8f96a980;
   border-radius: 25px;
   margin: 10px;
 }
 
 .bet-button {
+  font-weight: 800;
+  background-color: #242c3d;
+  color: #8f96a9;
+  border: none;
+  height: 40px;
+  width: 90px;
+}
+.bet-button:hover {
+  border: none;
   height: 40px;
   width: 90px;
 }
@@ -160,7 +171,9 @@
 .prediction {
   width: 15rem;
 }
-
+.prediction-text {
+  color: #8f96a9;
+}
 .mobile-percentage {
   display: none;
 }
