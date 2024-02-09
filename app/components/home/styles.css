@@ -87,14 +87,14 @@
 
 .bet-button {
   font-weight: 800;
-  background-color: #242c3d;
-  color: #8f96a9;
-  border: none;
+  background-color: #242c3d !important;
+  color: #8f96a9 !important;
+  border: none !important;
   height: 40px;
   width: 90px;
 }
 .bet-button:hover {
-  border: none;
+  border: none !important;
   height: 40px;
   width: 90px;
 }
