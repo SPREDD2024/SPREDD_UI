@@ -19,7 +19,7 @@ const HomeNavbar = () => {
   return (
     <div className="button-group">
       <Link href="/api/auth/login">
-        <Button variant="contained">Sign In</Button>
+        <Button style={{ color: "#fff"}} variant="contained">Sign In</Button>
       </Link>
     </div>
   );
