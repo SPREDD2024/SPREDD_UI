@@ -27,17 +27,11 @@ const Dashboard = () => {
   const predictions = useSelector((state) => state.predictions);
   const history = useSelector((state) => state.history);
 
-  const gameItemsPerPage = 5;
   const historyItemsPerPage = isMobile ? 5 : 10;
 
   const [loading, setLoading] = useState(true);
 
-  const [currentGamePage, setCurrentGamePage] = useState(1);
   const [currentHistoryPage, setCurrentHistoryPage] = useState(1);
-  const gameStartIndex = (currentGamePage - 1) * gameItemsPerPage;
-  const gameEndIndex = gameStartIndex + gameItemsPerPage;
-  const currentGameItems = predictions.data && predictions.data.slice(gameStartIndex, gameEndIndex);
-  const gamePageCount = Math.ceil(predictions.data.length / gameItemsPerPage);
 
   const historyStartIndex = (currentHistoryPage - 1) * historyItemsPerPage;
   const historyEndIndex = historyStartIndex + historyItemsPerPage;
@@ -85,10 +79,6 @@ const Dashboard = () => {
       .finally(() => setLoading(false));
   }, [dispatch]);
 
-  const handleGamePageChange = (event, value) => {
-    setCurrentGamePage(value);
-  };
-
   const handleHistoryPageChange = (event, value) => {
     setCurrentHistoryPage(value);
   };
@@ -122,22 +112,12 @@ const Dashboard = () => {
                 </IconButton>
               </Tooltip>
             </Typography>
-            <Pagination
-              count={gamePageCount}
-              size="medium"
-              page={currentGamePage}
-              shape="rounded"
-              onChange={handleGamePageChange}
-              sx={{ button: { color: "#ffffff" } }}
-            />
           </div>
-          {currentGameItems &&
-            currentGameItems.map((item, index) => (
+          {predictions.data.length > 0 &&
+            predictions.data.map((item, index) => (
               <div className="flex match-card" key={index} style={{ outline: item.checked ? "1px solid #ff6700" : "0px" }}>
                 <Typography style={{ color: "#8F96A9", fontWeight: "700" }} className="center number">
-                  {(currentGamePage - 1) * gameItemsPerPage + index + 1 < 10
-                    ? "0" + ((currentGamePage - 1) * gameItemsPerPage + index + 1)
-                    : (currentGamePage - 1) * gameItemsPerPage + index + 1}
+                  {index + 1 < 10 ? "0" + (index + 1) : index + 1}
                 </Typography>
                 <div className="flex center opponents">
                   <div className="home-team flex-row">
