@@ -218,6 +218,7 @@
 
   .match-card {
     flex-direction: column;
+    padding-block: 1rem;
   }
 
   .opponents {
