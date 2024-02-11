@@ -1,12 +1,24 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import "./styles.css";
-import { Button, Checkbox, IconButton, Pagination, Stack, Tooltip, Typography, colors } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  IconButton,
+  Pagination,
+  Stack,
+  Tooltip,
+  Typography,
+  colors,
+} from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-import { PREDICTION_API_URL, HISTORY_API_URL } from "../common/constants/apiURLs";
+import {
+  PREDICTION_API_URL,
+  HISTORY_API_URL,
+} from "../common/constants/apiURLs";
 import TeamColorCodes from "../common/constants/teamColorCodes";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import TeamColors from "../common/TeamColors";
@@ -36,14 +48,25 @@ const Dashboard = () => {
   const historyStartIndex = (currentHistoryPage - 1) * historyItemsPerPage;
   const historyEndIndex = historyStartIndex + historyItemsPerPage;
   const historyData = history.data.slice().reverse();
-  let currentHistoryItems = historyData.slice(historyStartIndex, historyEndIndex);
+  let currentHistoryItems = historyData.slice(
+    historyStartIndex,
+    historyEndIndex
+  );
   const historyPageCount = Math.ceil(historyData.length / historyItemsPerPage);
-  if (currentHistoryItems && currentHistoryItems.length % 2 !== 0 && historyItemsPerPage !== 5) {
+  if (
+    currentHistoryItems &&
+    currentHistoryItems.length % 2 !== 0 &&
+    historyItemsPerPage !== 5
+  ) {
     const dummyData = { id: -1, dummy: true };
     currentHistoryItems = [...currentHistoryItems, dummyData];
   }
   const today = new Date();
-  const formattedToday = [today.getFullYear(), String(today.getMonth() + 1).padStart(2, "0"), String(today.getDate()).padStart(2, "0")].join("-");
+  const formattedToday = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0"),
+  ].join("-");
 
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
@@ -55,7 +78,11 @@ const Dashboard = () => {
 
   const oldDate = new Date();
   oldDate.setDate(oldDate.getDate() - 5);
-  const startDate = [oldDate.getFullYear(), String(oldDate.getMonth() + 1).padStart(2, "0"), String(oldDate.getDate()).padStart(2, "0")].join("-");
+  const startDate = [
+    oldDate.getFullYear(),
+    String(oldDate.getMonth() + 1).padStart(2, "0"),
+    String(oldDate.getDate()).padStart(2, "0"),
+  ].join("-");
 
   useEffect(() => {
     axios
@@ -71,7 +98,9 @@ const Dashboard = () => {
       .finally(() => setLoading(false));
 
     axios
-      .get(`${HISTORY_API_URL}?start_date=${startDate}&end_date=${formattedYesterday}`)
+      .get(
+        `${HISTORY_API_URL}?start_date=${startDate}&end_date=${formattedYesterday}`
+      )
       .then((response) => {
         dispatch(fetchHistoryDataSuccess(response.data.data));
       })
@@ -85,12 +114,20 @@ const Dashboard = () => {
 
   const handleBetClick = (id) => {
     if (predictions.data) {
-      dispatch(fetchPredictionsDataSuccess(predictions.data.map((match) => (match.id === id ? { ...match, checked: !match.checked } : match))));
+      dispatch(
+        fetchPredictionsDataSuccess(
+          predictions.data.map((match) =>
+            match.id === id ? { ...match, checked: !match.checked } : match
+          )
+        )
+      );
     }
   };
 
   const getTeamColors = (team) => {
-    const teamColors = TeamColorCodes.find((item) => item.name === team || item.commonlyKnownAs === team);
+    const teamColors = TeamColorCodes.find(
+      (item) => item.name === team || item.commonlyKnownAs === team
+    );
     return teamColors ? teamColors.colors : [];
   };
 
@@ -100,13 +137,30 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container flex-column">
-      <img src="images/no-bs-banner-cropped.png" alt="nba banner" className="nba-banner" />
+      <div className="flex image-rollercoaster">
+        <img
+          src="images/no-bs-banner-cropped.png"
+          alt="nba banner"
+          className="nba-banner"
+        />
+        <img
+          src="images/get-ready-banner-cropped.png"
+          alt="nba banner"
+          className="nba-banner"
+        />
+      </div>
       <div className="prediction-card">
         <Stack spacing={1.5}>
           <div className="card-header flex">
             <Typography className="header-text">
-              <span className="header-title">Today's Matches {formattedToday}</span>
-              <Tooltip title="*Win Probability Percentages by Spredd's AI Prediction Engine" placement="right" arrow>
+              <span className="header-title">
+                Today's Games: {formattedToday}
+              </span>
+              <Tooltip
+                title="*Win Probability Percentages by Spredd's AI Prediction Engine"
+                placement="right"
+                arrow
+              >
                 <IconButton>
                   <InfoIcon color="primary" />
                 </IconButton>
@@ -115,8 +169,15 @@ const Dashboard = () => {
           </div>
           {predictions.data.length > 0 &&
             predictions.data.map((item, index) => (
-              <div className="flex match-card" key={index} style={{ outline: item.checked ? "1px solid #ff6700" : "0px" }}>
-                <Typography style={{ color: "#8F96A9", fontWeight: "700" }} className="center number">
+              <div
+                className="flex match-card"
+                key={index}
+                style={{ outline: item.checked ? "1px solid #ff6700" : "0px" }}
+              >
+                <Typography
+                  style={{ color: "#8F96A9", fontWeight: "700" }}
+                  className="center number"
+                >
                   {index + 1 < 10 ? "0" + (index + 1) : index + 1}
                 </Typography>
                 <div className="flex center opponents">
@@ -125,7 +186,8 @@ const Dashboard = () => {
                       <Tooltip
                         title={
                           <Typography className="medium">
-                            Chances of {item.home_team} winning are {item.win_percentage}%
+                            Chances of {item.home_team} winning are{" "}
+                            {item.win_percentage}%
                           </Typography>
                         }
                         placement="left"
@@ -136,25 +198,49 @@ const Dashboard = () => {
                         </IconButton>
                       </Tooltip>
                     )}
-                    <Typography className="center medium">{item.home_team}</Typography>
-                    {!isMobile && <TeamColors teamColors={getTeamColors(item.home_team)} />}
+                    <Typography className="center medium">
+                      {item.home_team}
+                    </Typography>
+                    {!isMobile && (
+                      <TeamColors teamColors={getTeamColors(item.home_team)} />
+                    )}
                   </div>
                   <div className="vs flex-column">
                     <Typography className="center medium">VS</Typography>
                     <div className="center percentage flex-row">
-                      {item.home_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
-                      <Typography className="center">{item.win_percentage}%</Typography>
-                      {item.away_team === item.prediction && <DoubleArrowIcon />}
+                      {item.home_team === item.prediction && (
+                        <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />
+                      )}
+                      <Typography className="center">
+                        {item.win_percentage}%
+                      </Typography>
+                      {item.away_team === item.prediction && (
+                        <DoubleArrowIcon />
+                      )}
                     </div>
+                    <Typography className="center mobile-percentage percentage flex">
+                      {item.home_team === item.prediction && (
+                        <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />
+                      )}
+                      <Typography className="center">
+                        {item.win_percentage}%
+                      </Typography>
+                      {item.away_team === item.prediction && (
+                        <DoubleArrowIcon />
+                      )}
+                    </Typography>
                   </div>
                   <div className="away-team flex-row">
-                    {!isMobile && <TeamColors teamColors={getTeamColors(item.away_team)} />}
+                    {!isMobile && (
+                      <TeamColors teamColors={getTeamColors(item.away_team)} />
+                    )}
                     <Typography className="center">{item.away_team}</Typography>
                     {item.away_team === item.prediction && (
                       <Tooltip
                         title={
                           <Typography>
-                            Chances of {item.away_team} winning are {item.win_percentage}%
+                            Chances of {item.away_team} winning are{" "}
+                            {item.win_percentage}%
                           </Typography>
                         }
                         placement="right"
@@ -171,14 +257,18 @@ const Dashboard = () => {
                   <div className="divider" />
                   {!isMobile && (
                     <Typography className="center prediction">
-                      <span className="prediction-text">Prediction:</span> {item.prediction}
+                      <span className="prediction-text">Prediction:</span>{" "}
+                      {item.prediction}
                     </Typography>
                   )}
                   <div className="flex-row mobile-bet-button">
-                    <Typography className="center mobile-percentage">{item.win_percentage}%</Typography>
                     <Button
                       variant={item.checked ? "contained" : "outlined"}
-                      className={item.checked ? "bet-button center checked" : "bet-button center"}
+                      className={
+                        item.checked
+                          ? "bet-button center checked"
+                          : "bet-button center"
+                      }
                       onClick={() => handleBetClick(item.id)}
                     >
                       <Checkbox
@@ -237,25 +327,50 @@ const Dashboard = () => {
                               arrow
                             >
                               <IconButton>
-                                <EmojiEventsIcon className="center" color="primary" />
+                                <EmojiEventsIcon
+                                  className="center"
+                                  color="primary"
+                                />
                               </IconButton>
                             </Tooltip>
                           )}
-                          <Typography className="center medium">{item.home_team}</Typography>
-                          {!isMobile && <TeamColors teamColors={getTeamColors(item.home_team)} />}
+                          <Typography className="center medium">
+                            {item.home_team}
+                          </Typography>
+                          {!isMobile && (
+                            <TeamColors
+                              teamColors={getTeamColors(item.home_team)}
+                            />
+                          )}
                         </div>
                         <div className="vs flex-column">
-                          <Typography className="center small">{item.date}</Typography>
+                          <Typography className="center small">
+                            {item.date}
+                          </Typography>
                           <Typography className="center medium">VS</Typography>
                           <div className="center percentage flex-row">
-                            {item.home_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
-                            <Typography className="center">{item.win_percentage}%</Typography>
-                            {item.away_team === item.prediction && <DoubleArrowIcon />}
+                            {item.home_team === item.prediction && (
+                              <DoubleArrowIcon
+                                sx={{ transform: "rotate(180deg)" }}
+                              />
+                            )}
+                            <Typography className="center">
+                              {item.win_percentage}%
+                            </Typography>
+                            {item.away_team === item.prediction && (
+                              <DoubleArrowIcon />
+                            )}
                           </div>
                         </div>
                         <div className="away-team-history flex-row">
-                          {!isMobile && <TeamColors teamColors={getTeamColors(item.away_team)} />}
-                          <Typography className="center">{item.away_team}</Typography>
+                          {!isMobile && (
+                            <TeamColors
+                              teamColors={getTeamColors(item.away_team)}
+                            />
+                          )}
+                          <Typography className="center">
+                            {item.away_team}
+                          </Typography>
                           {item.away_team === item.prediction && (
                             <Tooltip
                               title={
@@ -269,7 +384,10 @@ const Dashboard = () => {
                               arrow
                             >
                               <IconButton>
-                                <EmojiEventsIcon className="center" color="primary" />
+                                <EmojiEventsIcon
+                                  className="center"
+                                  color="primary"
+                                />
                               </IconButton>
                             </Tooltip>
                           )}

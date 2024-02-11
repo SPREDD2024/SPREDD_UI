@@ -1,4 +1,4 @@
-*{
+* {
   font-family: Inter;
 }
 .flex {
@@ -27,8 +27,33 @@
   display: block;
   height: 375px;
   width: 100%;
+  min-width: 100vw;
 }
 
+@keyframes imgrollercoaster {
+  0% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(-100vw);
+  }
+  90% {
+    transform: translateX(-100vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.image-rollercoaster {
+  animation-name: imgrollercoaster;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out 2s;
+}
 .prediction-card {
   min-height: 50px;
   background-color: #242c3d;
@@ -64,7 +89,7 @@
 
 .divider {
   width: 4px;
-  background-color: #8f96a980;
+  background-color: #fe6800;
   border-radius: 25px;
   margin: 10px;
 }
@@ -85,6 +110,7 @@
 .checked {
   background-color: #fe6800 !important;
   color: #ffffff !important;
+  -webkit-text-fill-color: rgba(256, 256, 256, 1) !important;
 }
 .opponents {
   flex-direction: row;
@@ -168,8 +194,16 @@
 .mb-5 {
   margin-bottom: 5px;
 }
-
+.mobile-percentage {
+  display: none;
+}
 @media (max-width: 768px) {
+  .nba-banner {
+    max-height: 250px;
+  }
+  .match-card {
+    min-height: 120px;
+  }
   .card-header {
     flex-direction: column;
   }
@@ -177,7 +211,7 @@
   .header-text {
     font-size: large !important;
   }
-  
+
   .number {
     display: none;
   }
@@ -233,12 +267,8 @@
     justify-content: space-evenly;
   }
 
-  .percentage {
-    display: none;
-  }
-
   .mobile-percentage {
-    display: block;
+    display: none;
     position: relative;
     background-color: #242c3d;
     padding: 5px;

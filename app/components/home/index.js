@@ -45,11 +45,18 @@ const Home = () => {
 
   return (
     <div className="dashboard-container flex-column">
-      <img
-        src="images/get-ready-banner-cropped.png"
-        alt="nba banner"
-        className="nba-banner-landing-page"
-      />
+      <div className="flex image-rollercoaster">
+        <img
+          src="images/no-bs-banner-cropped.png"
+          alt="nba banner"
+          className="nba-banner "
+        />
+        <img
+          src="images/get-ready-banner-cropped.png"
+          alt="nba banner"
+          className="nba-banner "
+        />
+      </div>
       <div className="prediction-card">
         <Stack spacing={2}>
           <div className="card-header flex">
@@ -196,9 +203,13 @@ const Home = () => {
           <div className="history-div">
             {dashboardMatches &&
               dashboardMatches.slice(0, 6).map((item, index) => (
-                <div style={{
-                  marginBottom: "12px",
-                }} className="flex match-card mb-5" key={index}>
+                <div
+                  style={{
+                    marginBottom: "12px",
+                  }}
+                  className="flex match-card mb-5"
+                  key={index}
+                >
                   {!item.dummy && (
                     <>
                       <div className="flex center opponents">
