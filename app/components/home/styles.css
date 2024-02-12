@@ -1,3 +1,7 @@
+* {
+  font-family: Inter;
+}
+
 .flex {
   display: flex;
 }
@@ -27,13 +31,6 @@
   min-width: 100vw;
 }
 
-.prediction-card {
-  min-height: 50px;
-  background-color: #242c3d;
-  margin-top: 1rem;
-  border-radius: 10px;
-  padding: 30px 22px;
-}
 @keyframes imgrollercoaster {
   0% {
     transform: translateX(0);
@@ -56,7 +53,31 @@
   animation-name: imgrollercoaster;
   animation-duration: 10s;
   animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out 2s;
 }
+
+.prediction-card {
+  min-height: 50px;
+  background-color: #242c3d;
+  margin-top: 1rem;
+  border-radius: 10px;
+  padding-inline: 30px;
+  padding-block: 22px;
+}
+
+.disclaimer-card {
+  background-color: #242c3d;
+  margin-top: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  padding-block: 5px;
+}
+
+.disclaimer {
+  font-size: large !important;
+  font-weight: bold !important;
+}
+
 .card-header {
   flex-direction: row;
   justify-content: space-between;
@@ -68,7 +89,7 @@
 }
 
 .header-title {
-  border-bottom: solid 2px #fe6800;
+  border-bottom: solid 3px #fe6800;
   margin-bottom: 0.75rem;
 }
 
@@ -140,22 +161,26 @@
 }
 
 .home-team {
+  width: 30rem;
   justify-content: right;
   gap: 15px;
 }
 
 .home-team-history {
+  width: 12rem;
   justify-content: right;
   text-align: right;
   gap: 5px;
 }
 
 .away-team {
+  width: 30rem;
   justify-content: left;
   gap: 15px;
 }
 
 .away-team-history {
+  width: 12rem;
   justify-content: left;
   text-align: left;
   gap: 5px;
@@ -165,16 +190,12 @@
   width: 5rem;
 }
 
-.x-small {
+.small {
   font-size: small !important;
 }
 
-.small {
-  font-size: small;
-}
-
 .medium {
-  font-size: medium;
+  font-size: medium !important;
 }
 
 .percentage {
@@ -202,11 +223,13 @@
 .mb-5 {
   margin-bottom: 5px;
 }
-
-@media (max-width: 768px) {
+.mobile-percentage {
+  display: none;
 }
-
 @media (max-width: 768px) {
+  .match-card {
+    min-height: 120px;
+  }
   .card-header {
     flex-direction: column;
   }
@@ -221,6 +244,7 @@
 
   .match-card {
     flex-direction: column;
+    padding-block: 1rem;
   }
 
   .opponents {
@@ -270,12 +294,8 @@
     justify-content: space-evenly;
   }
 
-  .percentage {
-    display: none;
-  }
-
   .mobile-percentage {
-    display: block;
+    display: none;
     position: relative;
     background-color: #242c3d;
     padding: 5px;

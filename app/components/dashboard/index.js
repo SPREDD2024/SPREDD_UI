@@ -192,7 +192,7 @@ const Dashboard = () => {
                   <div className="flex-row mobile-bet-button">
                     <Button
                       variant={item.checked ? "contained" : "outlined"}
-                      className={item.checked ? "bet-button center checked" : "bet-button center"}
+                      className={item.checked ? "bet-button center" : "bet-button center"}
                       onClick={() => handleBetClick(item.id)}
                     >
                       <Checkbox
