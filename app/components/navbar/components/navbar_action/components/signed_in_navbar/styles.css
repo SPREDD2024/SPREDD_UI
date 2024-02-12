@@ -14,3 +14,7 @@
 .user-image {
   height: 40px;
 }
+
+.logout {
+  color: black !important;
+}

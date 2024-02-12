@@ -47,7 +47,7 @@ const SignedInNavbar = () => {
               <Link href="/api/auth/logout">
                 <Button>
                   <Logout fontSize="small" />
-                  Logout
+                  <span className="logout">Logout</span>
                 </Button>
               </Link>
             </MenuItem>
