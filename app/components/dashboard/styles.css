@@ -20,7 +20,7 @@
 }
 
 .dashboard-container {
-  margin: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .nba-banner {
@@ -54,6 +54,7 @@
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out 2s;
 }
+
 .prediction-card {
   min-height: 50px;
   background-color: #242c3d;
@@ -61,6 +62,19 @@
   border-radius: 10px;
   padding-inline: 30px;
   padding-block: 22px;
+}
+
+.disclaimer-card {
+  background-color: #242c3d;
+  margin-top: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  padding-block: 5px;
+}
+
+.disclaimer {
+  font-size: large !important;
+  font-weight: bold !important;
 }
 
 .card-header {
@@ -198,9 +212,6 @@
   display: none;
 }
 @media (max-width: 768px) {
-  .nba-banner {
-    max-height: 250px;
-  }
   .match-card {
     min-height: 120px;
   }
@@ -245,6 +256,7 @@
 
   .divider {
     width: 100%;
+    background-color: #8f96a980;
     margin: 5px;
     height: 3px;
   }

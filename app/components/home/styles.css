@@ -21,7 +21,7 @@
 }
 
 .dashboard-container {
-  margin: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .nba-banner {
@@ -105,7 +105,7 @@
 
 .divider {
   width: 4px;
-  background-color: #8f96a980;
+  background-color: #fe6800;
   border-radius: 25px;
   margin: 10px;
 }
