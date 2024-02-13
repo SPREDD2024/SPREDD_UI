@@ -212,6 +212,23 @@
 .mobile-percentage {
   display: none;
 }
+
+.signed-out {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 150px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
 @media (max-width: 768px) {
   .match-card {
     min-height: 120px;

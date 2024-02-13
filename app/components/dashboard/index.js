@@ -18,9 +18,12 @@ import {
   fetchHistoryDataFailure,
 } from "../../store/actions/dataActions";
 import axios from "axios";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import Link from "next/link";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const { user } = useUser();
 
   const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
 
@@ -98,215 +101,233 @@ const Dashboard = () => {
     return <div>Loading...</div>;
   }
 
+  console.log("*** ", user);
+
   return (
-    <div className="dashboard-container flex-column">
-      {isMobile ? (
-        <div className="flex image-rollercoaster">
-          <img src="images/no-bs-mob.png" alt="nba banner" className="nba-banner" />
-          <img src="images/get-ready-mob.png" alt="nba banner" className="nba-banner" />
-        </div>
-      ) : (
-        <div className="flex image-rollercoaster">
-          <img src="images/no-bs.png" alt="nba banner" className="nba-banner" />
-          <img src="images/get-ready.png" alt="nba banner" className="nba-banner" />
-        </div>
-      )}
-      <div className="prediction-card">
-        <Stack spacing={1.5}>
-          <div className="card-header flex">
-            <Typography className="header-text">
-              <span className="header-title">Today's Games: {formattedToday}</span>
-              <Tooltip title="*Win Probability Percentages by Spredd's AI Prediction Engine" placement="right" arrow>
-                <IconButton>
-                  <InfoIcon color="primary" />
-                </IconButton>
-              </Tooltip>
-            </Typography>
-          </div>
-          {predictions.data.length > 0 &&
-            predictions.data.map((item, index) => (
-              <div className="flex match-card" key={index} style={{ outline: item.checked ? "1px solid #ff6700" : "0px" }}>
-                <Typography style={{ color: "#8F96A9", fontWeight: "700" }} className="center number">
-                  {index + 1 < 10 ? "0" + (index + 1) : index + 1}
+    <>
+      {user ? (
+        <div className="dashboard-container flex-column">
+          {isMobile ? (
+            <div className="flex image-rollercoaster">
+              <img src="images/no-bs-mob.png" alt="nba banner" className="nba-banner" />
+              <img src="images/get-ready-mob.png" alt="nba banner" className="nba-banner" />
+            </div>
+          ) : (
+            <div className="flex image-rollercoaster">
+              <img src="images/no-bs.png" alt="nba banner" className="nba-banner" />
+              <img src="images/get-ready.png" alt="nba banner" className="nba-banner" />
+            </div>
+          )}
+          <div className="prediction-card">
+            <Stack spacing={1.5}>
+              <div className="card-header flex">
+                <Typography className="header-text">
+                  <span className="header-title">Today's Games: {formattedToday}</span>
+                  <Tooltip title="*Win Probability Percentages by Spredd's AI Prediction Engine" placement="right" arrow>
+                    <IconButton>
+                      <InfoIcon color="primary" />
+                    </IconButton>
+                  </Tooltip>
                 </Typography>
-                <div className="flex center opponents">
-                  <div className="home-team flex-row">
-                    {item.home_team === item.prediction && (
-                      <Tooltip
-                        title={
-                          <Typography className="medium">
-                            Chances of {item.home_team} winning are {item.win_percentage}%
-                          </Typography>
-                        }
-                        placement="left"
-                        arrow
-                      >
-                        <IconButton>
-                          <EmojiEventsIcon className="center" color="primary" />
-                        </IconButton>
-                      </Tooltip>
-                    )}
-                    <Typography className="center medium">{item.home_team}</Typography>
-                    {!isMobile && <TeamColors teamColors={getTeamColors(item.home_team)} />}
-                  </div>
-                  <div className="vs flex-column">
-                    <Typography className="center medium">VS</Typography>
-                    <div className="center percentage flex-row">
-                      {item.home_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }}/>}
-                      <Typography className="center small">{item.win_percentage}%</Typography>
-                      {item.away_team === item.prediction && <DoubleArrowIcon />}
-                    </div>
-                    <Typography className="center mobile-percentage percentage flex">
-                      {item.home_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
-                      <Typography className="center">{item.win_percentage}%</Typography>
-                      {item.away_team === item.prediction && <DoubleArrowIcon />}
-                    </Typography>
-                  </div>
-                  <div className="away-team flex-row">
-                    {!isMobile && <TeamColors teamColors={getTeamColors(item.away_team)} />}
-                    <Typography className="center">{item.away_team}</Typography>
-                    {item.away_team === item.prediction && (
-                      <Tooltip
-                        title={
-                          <Typography>
-                            Chances of {item.away_team} winning are {item.win_percentage}%
-                          </Typography>
-                        }
-                        placement="right"
-                        arrow
-                      >
-                        <IconButton>
-                          <EmojiEventsIcon className="center" color="primary" />
-                        </IconButton>
-                      </Tooltip>
-                    )}
-                  </div>
-                </div>
-                <div className="flex results">
-                  <div className="divider" />
-                  {!isMobile && (
-                    <Typography className="center prediction">
-                      <span className="prediction-text">Prediction:</span> {item.prediction}
-                    </Typography>
-                  )}
-                  <div className="flex-row mobile-bet-button">
-                    <Button
-                      variant={item.checked ? "contained" : "outlined"}
-                      className={item.checked ? "bet-button center" : "bet-button center"}
-                      onClick={() => handleBetClick(item.id)}
-                    >
-                      <Checkbox
-                        checked={item.checked}
-                        icon={<CheckBoxOutlineBlankIcon color="primary" />}
-                        checkedIcon={<CheckBoxIcon color="primary" />}
-                      />
-                      BET
-                    </Button>
-                  </div>
-                </div>
               </div>
-            ))}
-        </Stack>
-      </div>
-      <div className="prediction-card">
-        <Stack spacing={1}>
-          <div className="card-header flex">
-            <Typography className="header-text">
-              <span className="header-title">History</span>
-            </Typography>
-            <Pagination
-              count={historyPageCount}
-              size="medium"
-              page={currentHistoryPage}
-              onChange={handleHistoryPageChange}
-              shape="rounded"
-              sx={{ button: { color: "#ffffff" } }}
-            />
-          </div>
-          <div className="history-div">
-            {currentHistoryItems &&
-              currentHistoryItems.map((item, index) => (
-                <div
-                  className="flex match-card mb-5"
-                  key={index}
-                  style={{
-                    border: item.checked ? "1px solid #ff6700" : "0px",
-                    marginBottom: "12px",
-                  }}
-                >
-                  {!item.dummy && (
-                    <>
-                      <div className="flex center opponents">
-                        <div className="home-team-history flex-row">
-                          {item.home_team === item.prediction && (
-                            <Tooltip
-                              title={
-                                <Typography>
-                                  Our Prediction: {item.prediction}
-                                  <br />
-                                  Actual Result: {item.win}
-                                </Typography>
-                              }
-                              placement="bottom"
-                              arrow
-                            >
-                              <IconButton>
-                                <EmojiEventsIcon className="center" color="primary" />
-                              </IconButton>
-                            </Tooltip>
-                          )}
-                          <Typography className="center medium">{item.home_team}</Typography>
-                          {!isMobile && <TeamColors teamColors={getTeamColors(item.home_team)} />}
-                        </div>
-                        <div className="vs flex-column">
-                          <Typography className="center small">{item.date}</Typography>
-                          <Typography className="center medium">VS</Typography>
-                          <div className="center percentage flex-row">
-                            {item.home_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
-                            <Typography className="center">{item.win_percentage}%</Typography>
-                            {item.away_team === item.prediction && <DoubleArrowIcon />}
-                          </div>
-                        </div>
-                        <div className="away-team-history flex-row">
-                          {!isMobile && <TeamColors teamColors={getTeamColors(item.away_team)} />}
-                          <Typography className="center">{item.away_team}</Typography>
-                          {item.away_team === item.prediction && (
-                            <Tooltip
-                              title={
-                                <Typography>
-                                  Our Prediction: {item.prediction}
-                                  <br />
-                                  Actual Result: {item.win}
-                                </Typography>
-                              }
-                              placement="bottom"
-                              arrow
-                            >
-                              <IconButton>
-                                <EmojiEventsIcon className="center" color="primary" />
-                              </IconButton>
-                            </Tooltip>
-                          )}
-                        </div>
+              {predictions.data.length > 0 &&
+                predictions.data.map((item, index) => (
+                  <div className="flex match-card" key={index} style={{ outline: item.checked ? "1px solid #ff6700" : "0px" }}>
+                    <Typography style={{ color: "#8F96A9", fontWeight: "700" }} className="center number">
+                      {index + 1 < 10 ? "0" + (index + 1) : index + 1}
+                    </Typography>
+                    <div className="flex center opponents">
+                      <div className="home-team flex-row">
+                        {item.home_team === item.prediction && (
+                          <Tooltip
+                            title={
+                              <Typography className="medium">
+                                Chances of {item.home_team} winning are {item.win_percentage}%
+                              </Typography>
+                            }
+                            placement="left"
+                            arrow
+                          >
+                            <IconButton>
+                              <EmojiEventsIcon className="center" color="primary" />
+                            </IconButton>
+                          </Tooltip>
+                        )}
+                        <Typography className="center medium">{item.home_team}</Typography>
+                        {!isMobile && <TeamColors teamColors={getTeamColors(item.home_team)} />}
                       </div>
-                      <div className="flex history-results">
-                        <div className="divider" />
-                        <Typography className="center prediction medium">
-                          <span className="prediction-text">Results: </span>
-                          {item.win}
+                      <div className="vs flex-column">
+                        <Typography className="center medium">VS</Typography>
+                        <div className="center percentage flex-row">
+                          {item.home_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
+                          <Typography className="center small">{item.win_percentage}%</Typography>
+                          {item.away_team === item.prediction && <DoubleArrowIcon />}
+                        </div>
+                        <Typography className="center mobile-percentage percentage flex">
+                          {item.home_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
+                          <Typography className="center">{item.win_percentage}%</Typography>
+                          {item.away_team === item.prediction && <DoubleArrowIcon />}
                         </Typography>
                       </div>
-                    </>
-                  )}
-                </div>
-              ))}
+                      <div className="away-team flex-row">
+                        {!isMobile && <TeamColors teamColors={getTeamColors(item.away_team)} />}
+                        <Typography className="center">{item.away_team}</Typography>
+                        {item.away_team === item.prediction && (
+                          <Tooltip
+                            title={
+                              <Typography>
+                                Chances of {item.away_team} winning are {item.win_percentage}%
+                              </Typography>
+                            }
+                            placement="right"
+                            arrow
+                          >
+                            <IconButton>
+                              <EmojiEventsIcon className="center" color="primary" />
+                            </IconButton>
+                          </Tooltip>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex results">
+                      <div className="divider" />
+                      {!isMobile && (
+                        <Typography className="center prediction">
+                          <span className="prediction-text">Prediction:</span> {item.prediction}
+                        </Typography>
+                      )}
+                      <div className="flex-row mobile-bet-button">
+                        <Button
+                          variant={item.checked ? "contained" : "outlined"}
+                          className={item.checked ? "bet-button center" : "bet-button center"}
+                          onClick={() => handleBetClick(item.id)}
+                        >
+                          <Checkbox
+                            checked={item.checked}
+                            icon={<CheckBoxOutlineBlankIcon color="primary" />}
+                            checkedIcon={<CheckBoxIcon color="primary" />}
+                          />
+                          BET
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </Stack>
           </div>
-        </Stack>
-      </div>
-      <div className="disclaimer-card">
-        <Typography className="disclaimer">Notice: Our content is intended for individuals aged 18 and older. The information provided is strictly for entertainment purposes only, not advice. We are not liable for any outcomes.</Typography>
-      </div>
-    </div>
+          <div className="prediction-card">
+            <Stack spacing={1}>
+              <div className="card-header flex">
+                <Typography className="header-text">
+                  <span className="header-title">History</span>
+                </Typography>
+                <Pagination
+                  count={historyPageCount}
+                  size="medium"
+                  page={currentHistoryPage}
+                  onChange={handleHistoryPageChange}
+                  shape="rounded"
+                  sx={{ button: { color: "#ffffff" } }}
+                />
+              </div>
+              <div className="history-div">
+                {currentHistoryItems &&
+                  currentHistoryItems.map((item, index) => (
+                    <div
+                      className="flex match-card mb-5"
+                      key={index}
+                      style={{
+                        border: item.checked ? "1px solid #ff6700" : "0px",
+                        marginBottom: "12px",
+                      }}
+                    >
+                      {!item.dummy && (
+                        <>
+                          <div className="flex center opponents">
+                            <div className="home-team-history flex-row">
+                              {item.home_team === item.prediction && (
+                                <Tooltip
+                                  title={
+                                    <Typography>
+                                      Our Prediction: {item.prediction}
+                                      <br />
+                                      Actual Result: {item.win}
+                                    </Typography>
+                                  }
+                                  placement="bottom"
+                                  arrow
+                                >
+                                  <IconButton>
+                                    <EmojiEventsIcon className="center" color="primary" />
+                                  </IconButton>
+                                </Tooltip>
+                              )}
+                              <Typography className="center medium">{item.home_team}</Typography>
+                              {!isMobile && <TeamColors teamColors={getTeamColors(item.home_team)} />}
+                            </div>
+                            <div className="vs flex-column">
+                              <Typography className="center small">{item.date}</Typography>
+                              <Typography className="center medium">VS</Typography>
+                              <div className="center percentage flex-row">
+                                {item.home_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
+                                <Typography className="center">{item.win_percentage}%</Typography>
+                                {item.away_team === item.prediction && <DoubleArrowIcon />}
+                              </div>
+                            </div>
+                            <div className="away-team-history flex-row">
+                              {!isMobile && <TeamColors teamColors={getTeamColors(item.away_team)} />}
+                              <Typography className="center">{item.away_team}</Typography>
+                              {item.away_team === item.prediction && (
+                                <Tooltip
+                                  title={
+                                    <Typography>
+                                      Our Prediction: {item.prediction}
+                                      <br />
+                                      Actual Result: {item.win}
+                                    </Typography>
+                                  }
+                                  placement="bottom"
+                                  arrow
+                                >
+                                  <IconButton>
+                                    <EmojiEventsIcon className="center" color="primary" />
+                                  </IconButton>
+                                </Tooltip>
+                              )}
+                            </div>
+                          </div>
+                          <div className="flex history-results">
+                            <div className="divider" />
+                            <Typography className="center prediction medium">
+                              <span className="prediction-text">Results: </span>
+                              {item.win}
+                            </Typography>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  ))}
+              </div>
+            </Stack>
+          </div>
+          <div className="disclaimer-card">
+            <Typography className="disclaimer">
+              Notice: Our content is intended for individuals aged 18 and older. The information provided is strictly for entertainment purposes only,
+              not advice. We are not liable for any outcomes.
+            </Typography>
+          </div>
+        </div>
+      ) : (
+        <div className="signed-out">
+          <Typography color="primary">You are Signed Out Please Sign In again to continue...</Typography>
+          <div className="button-group">
+            <Link href="/api/auth/login">
+              <Button variant="contained">Sign In</Button>
+            </Link>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
