@@ -1,0 +1,12 @@
+.nav-action {
+  display: flex;
+  flex-direction: row;
+}
+
+.center {
+  align-self: center;
+}
+
+.link {
+    margin-right: 20px;
+}

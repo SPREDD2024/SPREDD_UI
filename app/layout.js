@@ -6,7 +6,7 @@ const libre = Libre_Franklin({ subsets: ["latin"] });
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 export const metadata = {
-  title: "SPRERDD",
+  title: "SPREDD",
 };
 
 export default function RootLayout({ children }) {

@@ -101,7 +101,6 @@ const Dashboard = () => {
     return <div>Loading...</div>;
   }
 
-  console.log("*** ", user);
 
   return (
     <>
