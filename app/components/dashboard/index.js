@@ -122,7 +122,7 @@ const Dashboard = () => {
               <div className="card-header flex">
                 <Typography className="header-text">
                   <span className="header-title">Today's Games: {formattedToday}</span>
-                  <Tooltip title="*Win Probability Percentages by Spredd's AI Prediction Engine" placement="right" arrow>
+                  <Tooltip title="Win Probability Percentages by Spredd's AI Prediction Engine" placement="right" arrow>
                     <IconButton>
                       <InfoIcon color="primary" />
                     </IconButton>
