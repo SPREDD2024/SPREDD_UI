@@ -1,5 +1,6 @@
 import Navbar_Action from "./components/navbar_action";
 import "./styles.css";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
@@ -11,7 +12,9 @@ const Navbar = () => {
     >
       <div className="container">
         <div className="logo">
-          <img src="images/tr.png" alt="SPREDD" className="logo" />
+          <Link href="https://www.spredd.ai" className="center">
+            <img src="images/tr.png" alt="SPREDD" className="logo" />
+          </Link>
         </div>
         <Navbar_Action />
       </div>
