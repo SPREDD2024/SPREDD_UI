@@ -32,12 +32,7 @@ const Home = () => {
 
   return (
     <div className="dashboard-container flex-column">
-      {isMobile ? (
-        <div className="flex image-rollercoaster">
-          <img src="images/no-bs-mob.png" alt="nba banner" className="nba-banner" />
-          <img src="images/get-ready-mob.png" alt="nba banner" className="nba-banner" />
-        </div>
-      ) : (
+      {!isMobile && (
         <div className="flex image-rollercoaster">
           <img src="images/no-bs.png" alt="nba banner" className="nba-banner" />
           <img src="images/get-ready.png" alt="nba banner" className="nba-banner" />
