@@ -132,11 +132,11 @@ const Dashboard = () => {
                     </Typography>
                     <div className="flex center opponents">
                       <div className="home-team flex-row">
-                        {item.home_team === item.prediction && (
+                        {item.away_team === item.prediction && (
                           <Tooltip
                             title={
                               <Typography className="medium">
-                                Chances of {item.home_team} winning are {item.win_percentage}%
+                                Chances of {item.away_team} winning are {item.win_percentage}%
                               </Typography>
                             }
                             placement="left"
@@ -147,30 +147,30 @@ const Dashboard = () => {
                             </IconButton>
                           </Tooltip>
                         )}
-                        <Typography className="center medium">{item.home_team}</Typography>
-                        {!isMobile && <TeamColors teamColors={getTeamColors(item.home_team)} />}
+                        <Typography className="center medium">{item.away_team}</Typography>
+                        {!isMobile && <TeamColors teamColors={getTeamColors(item.away_team)} />}
                       </div>
                       <div className="vs flex-column">
                         <Typography className="center medium">VS</Typography>
                         <div className="center percentage flex-row">
-                          {item.home_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
+                          {item.away_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
                           <Typography className="center small">{item.win_percentage}%</Typography>
-                          {item.away_team === item.prediction && <DoubleArrowIcon />}
+                          {item.home_team === item.prediction && <DoubleArrowIcon />}
                         </div>
                         <Typography className="center mobile-percentage percentage flex">
-                          {item.home_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
+                          {item.away_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
                           <Typography className="center">{item.win_percentage}%</Typography>
-                          {item.away_team === item.prediction && <DoubleArrowIcon />}
+                          {item.home_team === item.prediction && <DoubleArrowIcon />}
                         </Typography>
                       </div>
                       <div className="away-team flex-row">
-                        {!isMobile && <TeamColors teamColors={getTeamColors(item.away_team)} />}
-                        <Typography className="center">{item.away_team}</Typography>
-                        {item.away_team === item.prediction && (
+                        {!isMobile && <TeamColors teamColors={getTeamColors(item.home_team)} />}
+                        <Typography className="center">{item.home_team}</Typography>
+                        {item.home_team === item.prediction && (
                           <Tooltip
                             title={
                               <Typography>
-                                Chances of {item.away_team} winning are {item.win_percentage}%
+                                Chances of {item.home_team} winning are {item.win_percentage}%
                               </Typography>
                             }
                             placement="right"
@@ -239,7 +239,7 @@ const Dashboard = () => {
                         <>
                           <div className="flex center opponents">
                             <div className="home-team-history flex-row">
-                              {item.home_team === item.prediction && (
+                              {item.away_team === item.prediction && (
                                 <Tooltip
                                   title={
                                     <Typography>
@@ -256,22 +256,22 @@ const Dashboard = () => {
                                   </IconButton>
                                 </Tooltip>
                               )}
-                              <Typography className="center medium">{item.home_team}</Typography>
-                              {!isMobile && <TeamColors teamColors={getTeamColors(item.home_team)} />}
+                              <Typography className="center medium">{item.away_team}</Typography>
+                              {!isMobile && <TeamColors teamColors={getTeamColors(item.away_team)} />}
                             </div>
                             <div className="vs flex-column">
                               <Typography className="center small">{item.date}</Typography>
                               <Typography className="center medium">VS</Typography>
                               <div className="center percentage flex-row">
-                                {item.home_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
+                                {item.away_team === item.prediction && <DoubleArrowIcon sx={{ transform: "rotate(180deg)" }} />}
                                 <Typography className="center">{item.win_percentage}%</Typography>
-                                {item.away_team === item.prediction && <DoubleArrowIcon />}
+                                {item.home_team === item.prediction && <DoubleArrowIcon />}
                               </div>
                             </div>
                             <div className="away-team-history flex-row">
-                              {!isMobile && <TeamColors teamColors={getTeamColors(item.away_team)} />}
-                              <Typography className="center">{item.away_team}</Typography>
-                              {item.away_team === item.prediction && (
+                              {!isMobile && <TeamColors teamColors={getTeamColors(item.home_team)} />}
+                              <Typography className="center">{item.home_team}</Typography>
+                              {item.home_team === item.prediction && (
                                 <Tooltip
                                   title={
                                     <Typography>
