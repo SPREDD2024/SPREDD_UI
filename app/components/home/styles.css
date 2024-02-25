@@ -112,7 +112,7 @@
 
 .blur {
   position: absolute;
-  min-height: 90px;
+  min-height: 78px;
   border-radius: 10px;
   width: 100%;
   backdrop-filter: blur(10px);
