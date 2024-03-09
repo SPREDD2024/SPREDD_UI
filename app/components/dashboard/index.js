@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import "./styles.css";
-import { Button, Checkbox, IconButton, Pagination, Stack, Tooltip, Typography, colors } from "@mui/material";
+import { Button, Checkbox, IconButton, Pagination, Stack, Tooltip, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -100,7 +100,6 @@ const Dashboard = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-
 
   return (
     <>

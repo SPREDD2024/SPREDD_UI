@@ -18,3 +18,7 @@
 .logout {
   color: black !important;
 }
+
+.admin-dashboard {
+  align-self: center;
+}

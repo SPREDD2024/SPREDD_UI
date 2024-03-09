@@ -10,8 +10,7 @@ const Navbar_Action = () => {
   const pathName = usePathname();
   return (
     <div className="nav-action">
-      
-      {pathName === "/" || pathName === "/signedOut" ? <HomeNavbar /> : <SignedInNavbar />}
+      {pathName === "/" ? <HomeNavbar /> : <SignedInNavbar />}
     </div>
   );
 };
